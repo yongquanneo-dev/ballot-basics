@@ -1,0 +1,575 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<title>Ballot Basics 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one column that reads like a short field guide.
+   Sticky header, a hero with a live countdown, then four numbered-by-meaning sections.
+   Palette: warm paper and ink, with a cobalt accent and a blush tint for highlights. */
+:root {
+  --bg: #F5F3EC;
+  --fg: #1B1A24;
+  --muted: #55536A;
+  --card: #FFFFFF;
+  --line: #D8D4C6;
+  --accent: #2846E6;
+  --accent-ink: #FFFFFF;
+  --tint: #FFDCE3;
+  --ok: #1E7A52;
+  --bad: #B3261E;
+  --display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E0F1C;
+    --fg: #EEEBFF;
+    --muted: #A7A4C2;
+    --card: #17182B;
+    --line: #2C2E4A;
+    --accent: #8FA4FF;
+    --accent-ink: #0E0F1C;
+    --tint: #3A2535;
+    --ok: #5FD3A0;
+    --bad: #FF8A80;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E0F1C;
+  --fg: #EEEBFF;
+  --muted: #A7A4C2;
+  --card: #17182B;
+  --line: #2C2E4A;
+  --accent: #8FA4FF;
+  --accent-ink: #0E0F1C;
+  --tint: #3A2535;
+  --ok: #5FD3A0;
+  --bad: #FF8A80;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 760px; margin: 0 auto; padding-inline: 16px; }
+
+/* Header */
+.top {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.top .wrap {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 8px 16px; padding-block: 12px;
+}
+.brand { font: 800 1.05rem/1 var(--display); letter-spacing: -0.01em; color: var(--fg); text-decoration: none; }
+.nav { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.9rem; }
+.nav a { color: var(--muted); text-decoration: none; padding-block: 6px; min-height: 32px; display: inline-flex; align-items: center; }
+.nav a:hover { color: var(--fg); text-decoration: underline; }
+
+/* Sections */
+section { padding-block: 48px; border-top: 1px solid var(--line); }
+section:first-of-type { border-top: 0; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+h1 { font-weight: 800; font-size: clamp(2.3rem, 8vw, 3.6rem); line-height: 1.02; }
+h2 { font-weight: 800; font-size: clamp(1.6rem, 4.5vw, 2.2rem); line-height: 1.1; }
+h3 { font-weight: 600; font-size: 1.15rem; line-height: 1.25; }
+p { margin: 0; }
+.stack > * + * { margin-top: 12px; }
+.eyebrow {
+  font: 500 0.75rem/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--accent); margin-bottom: 14px;
+}
+.lede { font-size: 1.12rem; color: var(--muted); max-width: 52ch; margin-top: 18px; }
+.sub { color: var(--muted); max-width: 60ch; margin-top: 10px; }
+
+/* Hero */
+.hero { padding-top: 56px; }
+.countdown {
+  margin-top: 32px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px;
+  background: var(--tint); border-radius: 6px; padding: 18px 20px; width: 100%;
+}
+.countdown .num {
+  font: 800 clamp(2.6rem, 9vw, 3.6rem)/1 var(--display); font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+.countdown .label { color: var(--fg); font-weight: 500; }
+.hero .date { font: 500 0.85rem/1.4 var(--mono); color: var(--muted); margin-top: 12px; }
+
+/* Plan checklist */
+.progress { margin-top: 24px; }
+.progress-meta { display: flex; justify-content: space-between; font: 500 0.85rem/1.4 var(--mono); color: var(--muted); }
+.bar { height: 8px; background: var(--line); border-radius: 999px; margin-top: 8px; overflow: hidden; }
+.bar > span { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 999px; transition: width 240ms ease; }
+.steps { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 10px; }
+.step { background: var(--card); border: 1px solid var(--line); border-radius: 6px; }
+.step label {
+  display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: start;
+  padding: 16px 18px; min-height: 44px; cursor: pointer;
+}
+.step input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--accent); cursor: pointer; }
+.step .t { font-weight: 600; }
+.step .d { color: var(--muted); font-size: 0.95rem; grid-column: 2; }
+.step .d a { white-space: nowrap; }
+.step.done .t { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--muted); }
+.ghost {
+  margin-top: 16px; background: transparent; color: var(--fg); border: 1px solid var(--line);
+  border-radius: 999px; padding: 10px 16px; min-height: 44px; font: 500 0.9rem var(--body); cursor: pointer;
+}
+.ghost:hover { border-color: var(--fg); }
+
+/* Ballot cards */
+.grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); margin-top: 26px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 18px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card .term { font: 500 0.75rem/1.4 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.card p { color: var(--muted); font-size: 0.95rem; }
+.card .why { color: var(--fg); font-size: 0.95rem; border-top: 1px dashed var(--line); padding-top: 10px; margin-top: auto; }
+.callout {
+  margin-top: 18px; padding: 14px 16px; border-left: 4px solid var(--accent); background: var(--card);
+  border-radius: 0 6px 6px 0; font-size: 0.95rem;
+}
+
+/* Ways to vote */
+.ways { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); margin-top: 26px; }
+.way { border-top: 3px solid var(--fg); padding-top: 14px; min-width: 0; }
+.way p { color: var(--muted); font-size: 0.95rem; margin-top: 8px; }
+
+/* Quiz */
+.quiz { margin-top: 26px; background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 22px; }
+.quiz-count { font: 500 0.8rem var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.quiz-q { font: 600 1.25rem/1.3 var(--display); margin-top: 8px; text-wrap: balance; }
+.opts { display: grid; gap: 8px; margin-top: 16px; }
+.opt {
+  text-align: left; background: var(--bg); color: var(--fg); border: 1px solid var(--line);
+  border-radius: 6px; padding: 12px 14px; min-height: 48px; font: 500 1rem var(--body); cursor: pointer;
+}
+.opt:hover:not(:disabled) { border-color: var(--fg); }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 16%, var(--card)); }
+.opt.wrong { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 14%, var(--card)); }
+.feedback { margin-top: 14px; min-height: 1.6em; color: var(--muted); font-size: 0.95rem; }
+.feedback strong { color: var(--fg); }
+.next {
+  margin-top: 12px; background: var(--accent); color: var(--accent-ink); border: 0;
+  border-radius: 999px; padding: 12px 20px; min-height: 44px; font: 600 0.95rem var(--body); cursor: pointer;
+}
+.next[hidden] { display: none; }
+.score { font: 800 2.4rem/1 var(--display); }
+
+/* Glossary */
+.terms { margin-top: 22px; border-top: 1px solid var(--line); }
+.terms details { border-bottom: 1px solid var(--line); }
+.terms summary {
+  cursor: pointer; list-style: none; padding: 16px 32px 16px 0; position: relative;
+  font: 600 1.05rem var(--display); min-height: 44px; display: flex; align-items: center;
+}
+.terms summary::-webkit-details-marker { display: none; }
+.terms summary::after { content: "+"; position: absolute; right: 4px; top: 50%; transform: translateY(-50%); font: 400 1.4rem var(--body); color: var(--muted); }
+.terms details[open] summary::after { content: "–"; }
+.terms details p { padding: 0 0 16px; color: var(--muted); max-width: 60ch; }
+
+/* Footer */
+footer { border-top: 1px solid var(--line); padding-block: 36px 48px; color: var(--muted); font-size: 0.9rem; }
+footer ul { padding: 0; margin: 10px 0 0; list-style: none; display: grid; gap: 6px; }
+footer p + p { margin-top: 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+</style>
+<meta name="description" content="A nonpartisan voting checklist, ballot guide, and quiz for the November 3, 2026 midterms.">
+</head><body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Ballot Basics</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#plan">Plan</a>
+      <a href="#ballot">Ballot</a>
+      <a href="#ways">Ways to vote</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#terms">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+
+  <section class="hero">
+    <p class="eyebrow">Midterm election · Tuesday, November 3, 2026</p>
+    <h1>Your vote, without the homework.</h1>
+    <p class="lede">A six-step plan to get ready, a plain-English guide to what's on your ballot, and a quick quiz. It takes about ten minutes.</p>
+    <div class="countdown" role="status">
+      <span class="num" id="days">–</span>
+      <span class="label">days until Election Day</span>
+    </div>
+    <p class="date">Polls open in the morning in every state. Hours vary, so check yours.</p>
+  </section>
+
+  <section id="plan">
+    <p class="eyebrow">Step by step</p>
+    <h2>Get ready in six steps</h2>
+    <p class="sub">Rules are set by each state, so these steps point you to official sources. Your progress saves on this device.</p>
+
+    <div class="progress">
+      <div class="progress-meta"><span id="progress-text">0 of 6 done</span><span>Saved on this device</span></div>
+      <div class="bar" aria-hidden="true"><span id="progress-bar"></span></div>
+    </div>
+
+    <ol class="steps" id="steps">
+      <li class="step" data-step="reg">
+        <label>
+          <input type="checkbox" id="s-reg">
+          <span class="t">Confirm you're registered</span>
+          <span class="d">Look yourself up on your state's voter lookup. Many states let you register or check online. Find the official site at <a href="https://vote.gov" target="_blank" rel="noopener">vote.gov</a>.</span>
+        </label>
+      </li>
+      <li class="step" data-step="addr">
+        <label>
+          <input type="checkbox" id="s-addr">
+          <span class="t">Update your address if you moved</span>
+          <span class="d">A new address usually means updating your registration. Deadlines differ by state, so do it early.</span>
+        </label>
+      </li>
+      <li class="step" data-step="id">
+        <label>
+          <input type="checkbox" id="s-id">
+          <span class="t">Learn your state's ID rules</span>
+          <span class="d">Some states ask for photo ID at the polls, and others accept a utility bill or other documents. Check the requirements before you go.</span>
+        </label>
+      </li>
+      <li class="step" data-step="how">
+        <label>
+          <input type="checkbox" id="s-how">
+          <span class="t">Pick how you'll vote</span>
+          <span class="d">By mail, in person during early voting, or on Election Day. Each state decides which options exist and when they run.</span>
+        </label>
+      </li>
+      <li class="step" data-step="sample">
+        <label>
+          <input type="checkbox" id="s-sample">
+          <span class="t">Find your sample ballot and polling place</span>
+          <span class="d">A sample ballot lists every race and candidate for your address. Your state or county election office publishes it.</span>
+        </label>
+      </li>
+      <li class="step" data-step="plan">
+        <label>
+          <input type="checkbox" id="s-plan">
+          <span class="t">Lock in a plan</span>
+          <span class="d">Pick a day and time, sort out your ride, and set a reminder. Then tell a friend. People who plan are more likely to follow through.</span>
+        </label>
+      </li>
+    </ol>
+    <button class="ghost" id="reset" type="button">Start over</button>
+  </section>
+
+  <section id="ballot">
+    <p class="eyebrow">What's on the ballot</p>
+    <h2>Who you're voting for, and why it matters</h2>
+    <p class="sub">A midterm has no presidential race, but many other offices are up. Here is what each one does.</p>
+
+    <div class="grid">
+      <article class="card">
+        <span class="term">U.S. House · 2-year term</span>
+        <h3>Representative</h3>
+        <p>Every House seat is on the ballot. Members write federal laws and approve the federal budget.</p>
+        <p class="why">Your district's representative votes on the federal rules that affect you most.</p>
+      </article>
+      <article class="card">
+        <span class="term">U.S. Senate · 6-year term</span>
+        <h3>Senator</h3>
+        <p>Each state has two senators. About a third of the seats are up in any given election.</p>
+        <p class="why">Senators confirm federal judges and approve treaties and many top appointments.</p>
+      </article>
+      <article class="card">
+        <span class="term">State executive</span>
+        <h3>Governor</h3>
+        <p>The governor leads the state government, proposes the state budget, and signs or vetoes state laws.</p>
+        <p class="why">Governors shape state decisions on schools, roads, health care, and more.</p>
+      </article>
+      <article class="card">
+        <span class="term">State legislature</span>
+        <h3>State lawmakers</h3>
+        <p>State legislators write state laws, pass the state budget, and oversee state agencies.</p>
+        <p class="why">Many rules on tuition, rent, and jobs come from state law.</p>
+      </article>
+      <article class="card">
+        <span class="term">Local</span>
+        <h3>Local offices</h3>
+        <p>This can include mayors, city council members, school boards, county officials, and some judges.</p>
+        <p class="why">Local offices often make decisions that affect your daily life most directly.</p>
+      </article>
+      <article class="card">
+        <span class="term">Direct vote</span>
+        <h3>Ballot measures</h3>
+        <p>Some states and cities let voters decide questions directly, such as proposed laws or changes to the constitution.</p>
+        <p class="why">Measures can pass or fail based on votes like yours, without a legislator in between.</p>
+      </article>
+    </div>
+
+    <p class="callout">Your sample ballot shows exactly which of these are on your ballot, since not every office is up in every area.</p>
+  </section>
+
+  <section id="ways">
+    <p class="eyebrow">Ways to vote</p>
+    <h2>Three ways to cast your ballot</h2>
+    <p class="sub">Your state decides which options you have and the dates for each. Confirm with your election office.</p>
+
+    <div class="ways">
+      <div class="way">
+        <h3>By mail</h3>
+        <p>Some states mail a ballot to every registered voter. Others require you to request one first. Many let you track your ballot online.</p>
+      </div>
+      <div class="way">
+        <h3>Early, in person</h3>
+        <p>Many states offer in-person voting before Election Day, often at several sites. Hours and locations vary, and the lines are usually shorter.</p>
+      </div>
+      <div class="way">
+        <h3>Election Day</h3>
+        <p>Polls are open for set hours. Your polling place is listed on your sample ballot or your state's lookup tool.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <p class="eyebrow">Quick quiz</p>
+    <h2>How well do you know the basics?</h2>
+    <p class="sub">Four questions, about a minute.</p>
+    <div class="quiz" id="quiz-box" aria-live="polite"></div>
+  </section>
+
+  <section id="terms">
+    <p class="eyebrow">Glossary</p>
+    <h2>Words you'll see on election sites</h2>
+    <div class="terms">
+      <details>
+        <summary>Sample ballot</summary>
+        <p>A preview of the races and candidates for your address, so you can research before you vote.</p>
+      </details>
+      <details>
+        <summary>Early voting</summary>
+        <p>In-person voting that happens before Election Day, at set locations and hours.</p>
+      </details>
+      <details>
+        <summary>Provisional ballot</summary>
+        <p>A ballot cast when someone's eligibility is in question. It is counted only after officials verify eligibility.</p>
+      </details>
+      <details>
+        <summary>Ballot curing</summary>
+        <p>Fixing a mail ballot with a problem, such as a missing signature, before a deadline set by the state.</p>
+      </details>
+      <details>
+        <summary>Canvass</summary>
+        <p>The official review and count of votes after an election, done before results are certified.</p>
+      </details>
+      <details>
+        <summary>Certification</summary>
+        <p>The official confirmation of election results by the responsible officials.</p>
+      </details>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>This guide is nonpartisan. It does not recommend candidates or parties. Rules vary by state and county, so confirm dates and requirements with your official election office before you act.</p>
+    <p><strong>Official sources</strong></p>
+    <ul>
+      <li><a href="https://vote.gov" target="_blank" rel="noopener">vote.gov · registration, ID, and voter lookup by state</a></li>
+      <li><a href="https://www.eac.gov" target="_blank" rel="noopener">U.S. Election Assistance Commission</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Countdown to Election Day, midnight Pacific on Nov 3, 2026.
+  var target = new Date("2026-11-03T00:00:00-08:00");
+  var days = Math.max(0, Math.ceil((target - new Date()) / 86400000));
+  document.getElementById("days").textContent = String(days);
+  if (days === 0) {
+    document.querySelector(".countdown .label").textContent = "days left. Election Day was November 3, 2026.";
+  }
+
+  // Checklist with per-device progress.
+  var KEY = "ballot-basics-plan";
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { saved = {}; }
+
+  var boxes = Array.prototype.slice.call(document.querySelectorAll("#steps input[type=checkbox]"));
+  var total = boxes.length;
+
+  function save() {
+    var state = {};
+    boxes.forEach(function (b) { state[b.id] = b.checked; });
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  function render() {
+    var done = 0;
+    boxes.forEach(function (b) {
+      if (b.checked) done++;
+      b.closest(".step").classList.toggle("done", b.checked);
+    });
+    document.getElementById("progress-text").textContent = done + " of " + total + " done";
+    document.getElementById("progress-bar").style.width = (done / total * 100) + "%";
+  }
+
+  boxes.forEach(function (b) {
+    b.checked = !!saved[b.id];
+    b.addEventListener("change", function () { save(); render(); });
+  });
+  render();
+
+  document.getElementById("reset").addEventListener("click", function () {
+    boxes.forEach(function (b) { b.checked = false; });
+    save();
+    render();
+  });
+
+  // Quiz.
+  var questions = [
+    {
+      q: "How many years is a U.S. House term?",
+      options: ["2 years", "4 years", "6 years"],
+      answer: 0,
+      why: "House members serve two-year terms, so every seat is up every two years."
+    },
+    {
+      q: "How many U.S. senators does each state have?",
+      options: ["One", "Two", "Depends on population"],
+      answer: 1,
+      why: "Every state has two senators, no matter how many people live there."
+    },
+    {
+      q: "Which office usually leads a state's executive branch?",
+      options: ["Governor", "Mayor", "State legislature speaker"],
+      answer: 0,
+      why: "The governor leads the state's executive branch and proposes the state budget."
+    },
+    {
+      q: "What is a provisional ballot?",
+      options: [
+        "A ballot cast when eligibility is questioned, counted after it is checked",
+        "A practice ballot that never counts",
+        "A ballot used only before Election Day"
+      ],
+      answer: 0,
+      why: "Provisional ballots are counted only after officials verify the voter's eligibility."
+    }
+  ];
+
+  var box = document.getElementById("quiz-box");
+  var idx = 0, score = 0;
+
+  function showQuestion() {
+    var item = questions[idx];
+    box.innerHTML = "";
+
+    var count = document.createElement("p");
+    count.className = "quiz-count";
+    count.textContent = "Question " + (idx + 1) + " of " + questions.length;
+
+    var q = document.createElement("p");
+    q.className = "quiz-q";
+    q.textContent = item.q;
+
+    var opts = document.createElement("div");
+    opts.className = "opts";
+
+    var feedback = document.createElement("p");
+    feedback.className = "feedback";
+    feedback.setAttribute("aria-live", "polite");
+
+    var next = document.createElement("button");
+    next.type = "button";
+    next.className = "next";
+    next.hidden = true;
+    next.textContent = idx === questions.length - 1 ? "See my score" : "Next question";
+
+    item.options.forEach(function (text, i) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "opt";
+      btn.textContent = text;
+      btn.addEventListener("click", function () {
+        var buttons = opts.querySelectorAll(".opt");
+        buttons.forEach(function (x) { x.disabled = true; });
+        buttons[item.answer].classList.add("right");
+        if (i === item.answer) {
+          score++;
+          feedback.innerHTML = "";
+          var strong = document.createElement("strong");
+          strong.textContent = "Correct. ";
+          feedback.appendChild(strong);
+          feedback.appendChild(document.createTextNode(item.why));
+        } else {
+          btn.classList.add("wrong");
+          feedback.innerHTML = "";
+          var s2 = document.createElement("strong");
+          s2.textContent = "Not quite. ";
+          feedback.appendChild(s2);
+          feedback.appendChild(document.createTextNode(item.why));
+        }
+        next.hidden = false;
+      });
+      opts.appendChild(btn);
+    });
+
+    next.addEventListener("click", function () {
+      idx++;
+      if (idx < questions.length) showQuestion(); else showScore();
+    });
+
+    box.appendChild(count);
+    box.appendChild(q);
+    box.appendChild(opts);
+    box.appendChild(feedback);
+    box.appendChild(next);
+  }
+
+  function showScore() {
+    box.innerHTML = "";
+    var s = document.createElement("p");
+    s.className = "score";
+    s.textContent = score + " / " + questions.length;
+
+    var msg = document.createElement("p");
+    msg.className = "sub";
+    msg.textContent = score === questions.length
+      ? "You've got the basics down. Now check your sample ballot."
+      : "Good start. Read the glossary below, then check your sample ballot.";
+
+    var again = document.createElement("button");
+    again.type = "button";
+    again.className = "next";
+    again.textContent = "Try again";
+    again.addEventListener("click", function () {
+      idx = 0; score = 0; showQuestion();
+    });
+
+    box.appendChild(s);
+    box.appendChild(msg);
+    box.appendChild(again);
+  }
+
+  showQuestion();
+})();
+</script>
+
+</body></html>
